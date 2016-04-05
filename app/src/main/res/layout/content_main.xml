@@ -12,8 +12,10 @@
     tools:context="com.planme.planme.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/taskListView"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false" />
 </RelativeLayout>
