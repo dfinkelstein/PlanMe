@@ -18,7 +18,11 @@
         android:layout_height="0dp"
         android:layout_weight="0.5"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp">
 
         <CalendarView
             android:layout_width="wrap_content"
@@ -26,13 +30,32 @@
             android:id="@+id/calendarView" />
     </RelativeLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:id="@+id/listView"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:focusable="true"
-        android:clickable="true" />
+        android:layout_weight="0.5">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewTasks"
+
+            android:focusable="true"
+            android:clickable="true"
+            android:paddingTop="10dp" />
+
+        <LinearLayout android:id="@+id/empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView android:text="@string/no_tasks"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+            </TextView>
+
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>
