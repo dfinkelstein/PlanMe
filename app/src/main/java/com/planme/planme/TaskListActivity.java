@@ -1,35 +1,30 @@
 package com.planme.planme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-public class HomeScreenActivity extends AppCompatActivity {
+public class TaskListActivity extends AppCompatActivity {
 
     private TasksAdapter tasksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homescreen);
+        setContentView(R.layout.activity_task_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ArrayList<Task> arrayOfTasks = new ArrayList<>();
         tasksAdapter = new TasksAdapter(this, arrayOfTasks);
-        ListView taskListView = (ListView) findViewById(R.id.listViewTasks);
+        ListView taskListView = (ListView) findViewById(R.id.taskListView);
         taskListView.setAdapter(tasksAdapter);
         taskListView.setEmptyView(findViewById(R.id.empty));
 
@@ -42,6 +37,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                 addTask();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void addTask() {
@@ -52,31 +48,4 @@ public class HomeScreenActivity extends AppCompatActivity {
         tasksAdapter.add(newTask);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        switch (id) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-            case R.id.action_listview:
-                startActivity(new Intent(this, TaskListActivity.class));
-                break;
-            default: break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
