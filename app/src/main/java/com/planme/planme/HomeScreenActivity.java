@@ -8,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HomeScreenActivity extends AppCompatActivity {
@@ -23,6 +25,14 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homescreen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 2);
+        calendarView.setMinDate(calendar.getTimeInMillis());
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 2);
+        calendarView.setMaxDate(calendar.getTimeInMillis());
 
         ArrayList<Task> arrayOfTasks = new ArrayList<>();
         tasksAdapter = new TasksAdapter(this, arrayOfTasks);
