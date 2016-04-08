@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">PlanMe</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="no_tasks">No Tasks</string>
+    <string name="action_listview">List View</string>
+    <string name="no_location">No Location</string>
 </resources>
