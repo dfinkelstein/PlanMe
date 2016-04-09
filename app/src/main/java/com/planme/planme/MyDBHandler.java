@@ -3,6 +3,7 @@ package com.planme.planme;
 /**
  * Created by Ehsan on 4/6/16.
  */
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
@@ -76,6 +77,49 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void deleteTask(int id){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + "= " + id + ";");
+    }
+
+    public String viewDailyTasks(String date){
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date;
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()){
+            if (c.getString(c.getColumnIndex("name")) != null){
+                dbString += c.getString(c.getColumnIndex("name"));
+                dbString += "\n";
+            }
+        }
+        db.close();
+        return dbString;
+    }
+
+    public String viewSpecificTask(String date, String time){
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date + " AND " + COLUMN_STIME + " =" + time;
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()){
+            if (c.getString(c.getColumnIndex("name")) != null){
+                dbString += c.getString(c.getColumnIndex("name"));
+                dbString += "\n";
+            }
+        }
+        db.close();
+        return dbString;
+
+    }
+    public void modifyTask(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + "= " + id + ";");
     }
 
 }
