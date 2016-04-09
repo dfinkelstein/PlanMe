@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">PlanMe</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="no_tasks">No Tasks</string>
+    <string name="action_listview">View All Tasks</string>
+    <string name="no_location">No Location</string>
+    <string name="title_activity_task_list">All Tasks</string>
+    <string name="gps_settings_title">GPS Settings</string>
+    <string name="title_useGPS_preference">Use GPS</string>
+    <string name="title_gpsFrequency_preference">GPS Check Frequency</string>
+    <string name="dialog_title_gpsFrequency_preference">GPS Check Frequency</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="title_allowNotifications_preference">Allow Notifications</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="gpsFrequency_preference">gpsFrequency</string>
+    <string name="useGPS_preference">useGPS</string>
+    <string name="allowNotifications_preference">allowNotifications</string>
 </resources>

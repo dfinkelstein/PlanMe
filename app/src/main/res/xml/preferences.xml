@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/gps_settings_title">
+
+        <SwitchPreference
+            android:key="@string/useGPS_preference"
+            android:title="@string/title_useGPS_preference"/>
+
+        <ListPreference
+            android:key="@string/gpsFrequency_preference"
+            android:title="@string/title_gpsFrequency_preference"
+            android:dialogTitle="@string/dialog_title_gpsFrequency_preference"
+            android:summary="%s"
+            android:entries="@array/entries_gpsFrequency_preference"
+            android:entryValues="@array/entryvalues_gpsFrequency_preference"
+            android:dependency="useGPS"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/notifications_title">
+
+        <SwitchPreference
+            android:key="@string/allowNotifications_preference"
+            android:title="@string/title_allowNotifications_preference"/>
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

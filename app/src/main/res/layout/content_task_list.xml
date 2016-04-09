@@ -9,13 +9,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.planme.planme.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".TaskListActivity"
+    tools:showIn="@layout/activity_task_list">
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/taskListView"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentTop="false" />
+
+        android:focusable="true"
+        android:clickable="true"/>
+
+    <LinearLayout android:id="@+id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView android:text="@string/no_tasks"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+        </TextView>
+
+    </LinearLayout>
 </RelativeLayout>
