@@ -32,8 +32,8 @@ public class TaskListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Task Added!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Task Added!", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
                 addTask();
             }
         });
@@ -43,9 +43,9 @@ public class TaskListActivity extends AppCompatActivity {
     private void addTask() {
         // TODO Should eventually start new add task activity
 //        Task newTask = new Task("Test Task", new Date(), "This is a test task", new Location("Test Location"));
-        Task newTask = new Task("Test Task", new Date(), "This is a test task", null);
+        //Task newTask = new Task("Test Task", new Date(), "This is a test task", null);
 //        newTask.setStatus(Task.completionStatus.Completed);
-        tasksAdapter.add(newTask);
+        //tasksAdapter.add(newTask);
     }
 
 }
