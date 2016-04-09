@@ -21,8 +21,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_SDATE = "startDate";
     public static final String COLUMN_EDATE = "endDate";
-    public static final String COLUMN_STIME = "startTime";
-    public static final String COLUMN_ETIME = "endTime";
     public static final String COLUMN_STATUS= "status";
     public static final String COLUMN_TIMESTAMP = "timestmp";
 
@@ -40,8 +38,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_LOCATION + " TEXT " +
                 COLUMN_SDATE + " TEXT " +
                 COLUMN_EDATE + " TEXT " +
-                COLUMN_STIME + " TEXT " +
-                COLUMN_ETIME + " TEXT " +
                 COLUMN_STATUS + " TEXT " +
                 COLUMN_TIMESTAMP + " TEXT " +
                 ");";
@@ -64,8 +60,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_LOCATION, task.getLocation().toString());
         values.put(COLUMN_SDATE, task.getStartDate().toString());
         values.put(COLUMN_EDATE, task.getEndDate().toString());
-        values.put(COLUMN_STIME, task.getStartTime().toString());
-        values.put(COLUMN_ETIME, task.getEndTime().toString());
         values.put(COLUMN_TIMESTAMP, task.getTimestmp().toString());
         values.put(COLUMN_STATUS, task.getStatus().toString());
 
@@ -98,10 +92,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return dbString;
     }
 
-    public String viewSpecificTask(String date, String time){
+    public String viewSpecificTask(String date){
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date + " AND " + COLUMN_STIME + " =" + time;
+        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date;
 
         Cursor c = db.rawQuery(query, null);
 

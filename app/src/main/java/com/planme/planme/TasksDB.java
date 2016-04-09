@@ -13,8 +13,6 @@ public class TasksDB {
     private Location location;
     private Date startDate;
     private Date endDate;
-    private Time startTime;
-    private Time endTime;
     private Time timestmp;
     private completionStatus status;
 
@@ -37,9 +35,6 @@ public class TasksDB {
         this.startDate = startDate;
     }
 
-    public TasksDB(Time startTime) {
-        this.startTime = startTime;
-    }
 
     public int get_id() {
         return _id;
@@ -89,21 +84,6 @@ public class TasksDB {
         this.endDate = endDate;
     }
 
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
 
     public completionStatus getStatus() {
         return status;
