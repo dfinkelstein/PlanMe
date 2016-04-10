@@ -14,7 +14,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
@@ -45,21 +44,29 @@ public class HomeScreenActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Task Added!", Snackbar.LENGTH_LONG)
-                   //     .setAction("Action", null).show();
                 addTask();
             }
         });
     }
 
     private void addTask() {
-        // TODO Should eventually start new add task activity
-//        Task newTask = new Task("Test Task", new Date(), "This is a test task", new Location("Test Location"));
 
-        startActivity(new Intent(this, AddTask.class));
-        Task newTask = new Task("Test Task", new Date(), "This is a test task", null);
-//        newTask.setStatus(Task.completionStatus.Completed);
-        tasksAdapter.add(newTask);
+        startActivityForResult(new Intent(this, AddTaskActivity.class), 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (data.getBooleanExtra("Save", false)) {
+                    Snackbar.make(findViewById(R.id.fab), "Task Saved!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(findViewById(R.id.fab), "Task Deleted!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+        }
     }
 
     @Override

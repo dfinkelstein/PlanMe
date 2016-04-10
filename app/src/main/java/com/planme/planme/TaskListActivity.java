@@ -1,5 +1,6 @@
 package com.planme.planme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -28,12 +28,10 @@ public class TaskListActivity extends AppCompatActivity {
         taskListView.setAdapter(tasksAdapter);
         taskListView.setEmptyView(findViewById(R.id.empty));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_task);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Task Added!", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
                 addTask();
             }
         });
@@ -41,11 +39,23 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     private void addTask() {
-        // TODO Should eventually start new add task activity
-//        Task newTask = new Task("Test Task", new Date(), "This is a test task", new Location("Test Location"));
-        //Task newTask = new Task("Test Task", new Date(), "This is a test task", null);
-//        newTask.setStatus(Task.completionStatus.Completed);
-        //tasksAdapter.add(newTask);
+
+        startActivityForResult(new Intent(this, AddTaskActivity.class), 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (data.getBooleanExtra("Save", false)) {
+                    Snackbar.make(findViewById(R.id.fab_task), "Task Saved!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(findViewById(R.id.fab_task), "Task Deleted!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+        }
     }
 
 }
