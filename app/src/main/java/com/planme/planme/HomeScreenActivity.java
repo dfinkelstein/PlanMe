@@ -15,11 +15,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
     private TasksAdapter tasksAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +28,27 @@ public class HomeScreenActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        final CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 2);
         calendarView.setMinDate(calendar.getTimeInMillis());
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 2);
         calendarView.setMaxDate(calendar.getTimeInMillis());
+
+        //CalendarView.OnDateChangeListener
+        final Long date = calendarView.getDate();
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+//                Toast.makeText(view.getContext(),
+//                        "Year=" + year + "Month=" + month + "Day=" + dayOfMonth,
+//                        Toast.LENGTH_LONG).show();
+                // TODO Get tasks for selected day
+            }
+        });
+
 
         ArrayList<TasksDB> arrayOfTasks = new ArrayList<>();
         tasksAdapter = new TasksAdapter(this, arrayOfTasks);
