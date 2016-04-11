@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.content.ContentValues;
+import android.location.Location;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class MyDBHandler extends SQLiteOpenHelper {
@@ -42,8 +47,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_TIMESTAMP + " TEXT " +
                 ");";
         db.execSQL(query);
-
-
     }
 
     @Override
@@ -64,41 +67,60 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_STATUS, task.getStatus().toString());
 
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_TASK, null, values);
+        long id = db.insert(TABLE_TASK, null, values);
+
+        task.set_id(id);
+
         db.close();
     }
 
-    public void deleteTask(int id){
+    public void deleteTask(long id){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + "= " + id + ";");
-    }
-
-    public String viewDailyTasks(String date){
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date;
-
-        Cursor c = db.rawQuery(query, null);
-
-        c.moveToFirst();
-
-        while (!c.isAfterLast()){
-            if (c.getString(c.getColumnIndex("name")) != null){
-                dbString += c.getString(c.getColumnIndex("name"));
-                dbString += "\n";
-            }
-        }
         db.close();
-        return dbString;
     }
 
-    public String viewSpecificTask(int id){
+    public List<TasksDB> viewDailyTasks(String date){
         String name = "";
         String sDate = "";
         String eDate = "";
         String description = "";
         String location = "";
-        String output = "";
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "LIKE '" + date + "'";
+
+        Cursor c = db.rawQuery(query, null);
+
+        List<TasksDB> taskList = new ArrayList<>();
+
+        while (c.moveToNext()){
+            TasksDB task = new TasksDB();
+            if (c.getString(c.getColumnIndex("name")) != null){
+                name += c.getString(c.getColumnIndex("name"));
+                task.setName(name);
+                sDate += c.getString(c.getColumnIndex("sdate"));
+                task.setStartDate(new Date(sDate));
+                eDate += c.getString(c.getColumnIndex("eDate"));
+                task.setEndDate(new Date(eDate));
+                description += c.getString(c.getColumnIndex("description"));
+                task.setDescription(description);
+                location += c.getString(c.getColumnIndex("location"));
+                task.setLocation(new Location(location));
+            }
+            taskList.add(task);
+        }
+        db.close();
+        c.close();
+        return taskList;
+    }
+
+    public TasksDB viewSpecificTask(long id){
+        String name = "";
+        String sDate = "";
+        String eDate = "";
+        String description = "";
+        String location = "";
 
 
         SQLiteDatabase db = getWritableDatabase();
@@ -106,29 +128,31 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery(query, null);
 
-        c.moveToFirst();
+        TasksDB task = new TasksDB();
 
+        c.moveToFirst();
 
         while (!c.isAfterLast()){
             if (c.getString(c.getColumnIndex("name")) != null){
                 name += c.getString(c.getColumnIndex("name"));
-                name += "\n";
+                task.setName(name);
                 sDate += c.getString(c.getColumnIndex("sdate"));
-                sDate +="\n";
+                task.setStartDate(new Date(sDate));
                 eDate += c.getString(c.getColumnIndex("eDate"));
-                eDate += "\n";
+                task.setEndDate(new Date(eDate));
                 description += c.getString(c.getColumnIndex("description"));
-                description += "\n";
+                task.setDescription(description);
                 location += c.getString(c.getColumnIndex("location"));
-                location += "\n";
+                task.setLocation(new Location(location));
             }
-        output = name + sDate + eDate + description + location;
         }
         db.close();
-        return output;
+        c.close();
+
+        return task;
 
     }
-    public void modifyTask(int id){
+    public void modifyTask(long id){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_ID + "= " + id + ";");
     }

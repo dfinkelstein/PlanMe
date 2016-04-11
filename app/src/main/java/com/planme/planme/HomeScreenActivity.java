@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
@@ -35,11 +36,18 @@ public class HomeScreenActivity extends AppCompatActivity {
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 2);
         calendarView.setMaxDate(calendar.getTimeInMillis());
 
-        ArrayList<Task> arrayOfTasks = new ArrayList<>();
+        ArrayList<TasksDB> arrayOfTasks = new ArrayList<>();
         tasksAdapter = new TasksAdapter(this, arrayOfTasks);
-        ListView taskListView = (ListView) findViewById(R.id.listViewTasks);
+        final ListView taskListView = (ListView) findViewById(R.id.listViewTasks);
         taskListView.setAdapter(tasksAdapter);
         taskListView.setEmptyView(findViewById(R.id.empty));
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TasksDB task = (TasksDB) taskListView.getItemAtPosition(position);
+                modifyTask(task);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +61,13 @@ public class HomeScreenActivity extends AppCompatActivity {
     private void addTask() {
 
         startActivityForResult(new Intent(this, AddTaskActivity.class), 1);
+    }
+
+    private void modifyTask(TasksDB task) {
+
+        Intent modify = new Intent(this, AddTaskActivity.class);
+        modify.putExtra("TASK_ID", task.get_id());
+        startActivityForResult(modify, 1);
     }
 
     @Override

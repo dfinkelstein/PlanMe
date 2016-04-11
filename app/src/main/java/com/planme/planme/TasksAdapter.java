@@ -18,7 +18,7 @@ import java.util.Locale;
  *
  * Created by Danny Finkelstein on 4/6/2016.
  */
-public class TasksAdapter extends ArrayAdapter<Task> {
+public class TasksAdapter extends ArrayAdapter<TasksDB> {
 
     // View lookup cache
     private static class ViewHolder {
@@ -29,14 +29,14 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         TextView location;
     }
 
-    public TasksAdapter(Context context, List<Task> objects) {
+    public TasksAdapter(Context context, List<TasksDB> objects) {
         super(context, R.layout.item_task, objects);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Task task = getItem(position);
+        final TasksDB task = getItem(position);
 
         final ViewHolder viewHolder;
         if (convertView == null) {
@@ -69,7 +69,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         viewHolder.name.setText(task.getName());
 
         SimpleDateFormat df = new SimpleDateFormat("ccc MMM d hh:mm:ss a", Locale.US);
-        viewHolder.date.setText(df.format(task.getDueDate()));
+        viewHolder.date.setText(df.format(task.getEndDate()));
 
         viewHolder.description.setText(task.getDescription());
 
@@ -81,8 +81,8 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 
         viewHolder.checkComplete.setTag(task);
 
-        if (task.getStatus() == Task.completionStatus.Completed ||
-                task.getStatus() == Task.completionStatus.Canceled) {
+        if (task.getStatus() == TasksDB.completionStatus.Completed ||
+                task.getStatus() == TasksDB.completionStatus.Canceled) {
             viewHolder.checkComplete.setChecked(true);
             viewHolder.name.setPaintFlags(viewHolder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {

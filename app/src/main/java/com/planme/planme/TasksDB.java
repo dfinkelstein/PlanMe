@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Ehsan on 4/6/16.
  */
 public class TasksDB {
-    private int _id;
+    private long _id;
     private String name;
     private String description;
     private Location location;
@@ -36,11 +36,11 @@ public class TasksDB {
     }
 
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 

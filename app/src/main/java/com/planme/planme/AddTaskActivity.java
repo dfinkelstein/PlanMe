@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,9 +30,12 @@ public class AddTaskActivity extends AppCompatActivity {
     private MyEditTextDatePicker endDateText;
     private MyEditTextTimePicker startTimeText;
     private MyEditTextTimePicker endTimeText;
+    private EditText textName;
+    private EditText textDescription;
+    private EditText textLocation;
 
-    EditText inputText;
-    TextView outputText;
+    private TasksDB _task= null;
+
     MyDBHandler dbHandler;
 
     @Override
@@ -43,11 +47,22 @@ public class AddTaskActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        dbHandler = new MyDBHandler(this, null, null, 1);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            long id = extras.getLong("TASK_ID");
+            _task = dbHandler.viewSpecificTask(id);
+        }
+
+        textName = (EditText) findViewById(R.id.textTaskName);
+        textDescription = (EditText) findViewById(R.id.textDescription);
+        textLocation = (EditText) findViewById(R.id.textLocation);
+
         startDateText = new MyEditTextDatePicker(this, R.id.textStartDate);
         endDateText = new MyEditTextDatePicker(this, R.id.textEndDate);
         startTimeText = new MyEditTextTimePicker(this, R.id.textStartTime);
         endTimeText = new MyEditTextTimePicker(this, R.id.textEndTime);
-        dbHandler = new MyDBHandler(this, null, null, 1);
     }
     /* This method is for adding a task to the DB
     values from activity_add_task go inside the setters
@@ -75,6 +90,16 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if (_task == null) {
+            menu.findItem(R.id.action_delete).setEnabled(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -85,16 +110,18 @@ public class AddTaskActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_save:
-                // TODO Save
+                addToDB();
                 intent.putExtra("Save", true);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.action_delete:
-                // TODO Delete
-                intent.putExtra("Save", false);
-                setResult(RESULT_OK, intent);
-                finish();
+                if (_task != null) {
+                    deleteFromDB();
+                    intent.putExtra("Save", false);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
                 break;
             case android.R.id.home:
                 finish();
@@ -103,6 +130,21 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addToDB(){
+        TasksDB task = new TasksDB();
+        task.setName(textName.getText().toString());
+        task.setDescription(textDescription.getText().toString());
+        task.setStartDate(getDateTime("Start"));
+        task.setEndDate(getDateTime("End"));
+        task.setLocation(new Location(textLocation.getText().toString()));
+        task.setStatus(TasksDB.completionStatus.New);
+        dbHandler.addTask(task);
+    }
+
+    public void deleteFromDB() {
+        dbHandler.deleteTask(_task.get_id());
     }
 
     public Date getDateTime(String selector) {
