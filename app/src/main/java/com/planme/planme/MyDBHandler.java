@@ -92,7 +92,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return dbString;
     }
 
-    public String viewSpecificTask(String date){
+    public String viewSpecificTask(int id){
         String name = "";
         String sDate = "";
         String eDate = "";
@@ -102,7 +102,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date;
+        String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_ID  + "= " + id;
 
         Cursor c = db.rawQuery(query, null);
 
