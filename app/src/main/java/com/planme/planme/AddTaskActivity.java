@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.sql.Time;
@@ -29,6 +30,10 @@ public class AddTaskActivity extends AppCompatActivity {
     private MyEditTextTimePicker startTimeText;
     private MyEditTextTimePicker endTimeText;
 
+    EditText inputText;
+    TextView outputText;
+    MyDBHandler dbHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +47,25 @@ public class AddTaskActivity extends AppCompatActivity {
         endDateText = new MyEditTextDatePicker(this, R.id.textEndDate);
         startTimeText = new MyEditTextTimePicker(this, R.id.textStartTime);
         endTimeText = new MyEditTextTimePicker(this, R.id.textEndTime);
+        dbHandler = new MyDBHandler(this, null, null, 1);
     }
+    /* This method is for adding a task to the DB
+    values from activity_add_task go inside the setters
+    public void addToDB(){
+        TasksDB task = new TasksDB();
+        task.setName();
+        task.setDescription();
+        task.setStartDate();
+        task.setEndDate();
+        task.setLocation();
+        task.setStatus();
+        dbHandler.addTask(task);
+
+    }
+    */
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

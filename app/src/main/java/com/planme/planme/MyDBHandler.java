@@ -93,7 +93,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public String viewSpecificTask(String date){
-        String dbString = "";
+        String name = "";
+        String sDate = "";
+        String eDate = "";
+        String description = "";
+        String location = "";
+
+
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_SDATE + "= " + date;
 
@@ -101,14 +107,23 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         c.moveToFirst();
 
+
         while (!c.isAfterLast()){
             if (c.getString(c.getColumnIndex("name")) != null){
-                dbString += c.getString(c.getColumnIndex("name"));
-                dbString += "\n";
+                name += c.getString(c.getColumnIndex("name"));
+                name += "\n";
+                sDate += c.getString(c.getColumnIndex("name"));
+                sDate +="\n";
+                eDate += c.getString(c.getColumnIndex("name"));
+                eDate += "\n";
+                description += c.getString(c.getColumnIndex("name"));
+                description += "\n";
+                location += c.getString(c.getColumnIndex("name"));
+                location += "\n";
             }
         }
         db.close();
-        return dbString;
+        return name;
 
     }
     public void modifyTask(int id){
