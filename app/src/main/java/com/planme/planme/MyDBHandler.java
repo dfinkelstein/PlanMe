@@ -98,6 +98,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String eDate = "";
         String description = "";
         String location = "";
+        String output = "";
 
 
         SQLiteDatabase db = getWritableDatabase();
@@ -112,18 +113,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
             if (c.getString(c.getColumnIndex("name")) != null){
                 name += c.getString(c.getColumnIndex("name"));
                 name += "\n";
-                sDate += c.getString(c.getColumnIndex("name"));
+                sDate += c.getString(c.getColumnIndex("sdate"));
                 sDate +="\n";
-                eDate += c.getString(c.getColumnIndex("name"));
+                eDate += c.getString(c.getColumnIndex("eDate"));
                 eDate += "\n";
-                description += c.getString(c.getColumnIndex("name"));
+                description += c.getString(c.getColumnIndex("description"));
                 description += "\n";
-                location += c.getString(c.getColumnIndex("name"));
+                location += c.getString(c.getColumnIndex("location"));
                 location += "\n";
             }
+        output = name + sDate + eDate + description + location;
         }
         db.close();
-        return name;
+        return output;
 
     }
     public void modifyTask(int id){
