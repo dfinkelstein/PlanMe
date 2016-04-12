@@ -34,7 +34,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private EditText textDescription;
     private EditText textLocation;
 
-    private TasksDB _task= null;
+    private TasksDB _task = null;
 
     MyDBHandler dbHandler;
 
@@ -63,24 +63,11 @@ public class AddTaskActivity extends AppCompatActivity {
         endDateText = new MyEditTextDatePicker(this, R.id.textEndDate);
         startTimeText = new MyEditTextTimePicker(this, R.id.textStartTime);
         endTimeText = new MyEditTextTimePicker(this, R.id.textEndTime);
+
+        if (_task != null) {
+            populateFields();
+        }
     }
-    /* This method is for adding a task to the DB
-    values from activity_add_task go inside the setters
-    public void addToDB(){
-        TasksDB task = new TasksDB();
-        task.setName();
-        task.setDescription();
-        task.setStartDate();
-        task.setEndDate();
-        task.setLocation();
-        task.setStatus();
-        dbHandler.addTask(task);
-
-    }
-    */
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,6 +84,22 @@ public class AddTaskActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
 
+    }
+
+    private void populateFields() {
+        String dateFormat = "M/d/y"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+        String timeFormat = "hh:mm a"; //In which you need put here
+        SimpleDateFormat stf = new SimpleDateFormat(timeFormat, Locale.US);
+
+        textName.setText(_task.getName());
+        textDescription.setText(_task.getDescription());
+        textLocation.setText(_task.getDescription());
+        startDateText._editText.setText(sdf.format(_task.getStartDate()));
+        startTimeText._editText.setText(stf.format(_task.getStartDate()));
+        endDateText._editText.setText(sdf.format(_task.getEndDate()));
+        endTimeText._editText.setText(stf.format(_task.getEndDate()));
     }
 
     @Override
@@ -152,14 +155,21 @@ public class AddTaskActivity extends AppCompatActivity {
         if (selector.equals("Start")) {
             Date date = startDateText.getDate();
             Date time = startTimeText.getTime();
-            return new Date(date.getTime() + time.getTime());
+            return dateTime(date, time);
         } else if (selector.equals("End")) {
             Date date = endDateText.getDate();
             Date time = endTimeText.getTime();
-            return new Date(date.getTime() + time.getTime());
+            return dateTime(date, time);
         }
 
         return new Date();
+    }
+
+    public Date dateTime(Date date, Date time) {
+        return new Date(
+                date.getYear(), date.getMonth(), date.getDate(),
+                time.getHours(), time.getMinutes(), time.getSeconds()
+        );
     }
 
     public class MyEditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDateSetListener {

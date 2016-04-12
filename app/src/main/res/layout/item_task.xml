@@ -13,7 +13,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Task Name"
             android:id="@+id/textName"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:focusable="false" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +23,8 @@
             android:text="Date"
             android:id="@+id/textDate"
             android:layout_column="3"
-            android:layout_gravity="center_vertical|right" />
+            android:layout_gravity="center_vertical|end"
+            android:focusable="false" />
     </TableRow>
 
     <TableRow
@@ -34,13 +36,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/checkBoxComplete"
             android:layout_column="0"
-            android:checked="false" />
+            android:checked="false"
+            android:focusable="false" />
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Description"
             android:id="@+id/textDescription"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:focusable="false" />
     </TableRow>
 
     <TableRow
@@ -51,6 +55,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Location"
             android:id="@+id/textLocation"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:focusable="false" />
     </TableRow>
 </TableLayout>

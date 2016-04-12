@@ -13,13 +13,17 @@ import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
     private TasksAdapter tasksAdapter;
+    private MyDBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homescreen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dbHandler = new MyDBHandler(this, null, null, 1);
 
         final CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
 
@@ -36,16 +42,12 @@ public class HomeScreenActivity extends AppCompatActivity {
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 2);
         calendarView.setMaxDate(calendar.getTimeInMillis());
 
-        //CalendarView.OnDateChangeListener
-        final Long date = calendarView.getDate();
-
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//                Toast.makeText(view.getContext(),
-//                        "Year=" + year + "Month=" + month + "Day=" + dayOfMonth,
-//                        Toast.LENGTH_LONG).show();
-                // TODO Get tasks for selected day
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, dayOfMonth);
+                updateTasks(cal.getTime());
             }
         });
 
@@ -63,6 +65,8 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
 
+        updateTasks(new Date(calendarView.getDate()));
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +74,17 @@ public class HomeScreenActivity extends AppCompatActivity {
                 addTask();
             }
         });
+    }
+
+    private void updateTasks(Date date) {
+
+        tasksAdapter.clear();
+
+        SimpleDateFormat fmt = new SimpleDateFormat("EEE MMM dd", Locale.US);
+
+        List<TasksDB> tasks = dbHandler.viewDailyTasks(fmt.format(date));
+
+        tasksAdapter.addAll(tasks);
     }
 
     private void addTask() {
@@ -91,9 +106,11 @@ public class HomeScreenActivity extends AppCompatActivity {
                 if (data.getBooleanExtra("Save", false)) {
                     Snackbar.make(findViewById(R.id.fab), "Task Saved!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    updateTasks(new Date());
                 } else {
                     Snackbar.make(findViewById(R.id.fab), "Task Deleted!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    updateTasks(new Date());
                 }
             }
         }

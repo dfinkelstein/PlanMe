@@ -52,12 +52,12 @@ public class TasksAdapter extends ArrayAdapter<TasksDB> {
             viewHolder.checkComplete.setOnClickListener( new View.OnClickListener() {
                 public void onClick(View v) {
                     CheckBox cb = (CheckBox) v ;
-                    Task task = (Task) cb.getTag();
+                    TasksDB task = (TasksDB) cb.getTag();
                     if (cb.isChecked()) {
-                        task.setStatus(Task.completionStatus.Completed);
+                        task.setStatus(TasksDB.completionStatus.Completed);
                         viewHolder.name.setPaintFlags(viewHolder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {
-                        task.setStatus(Task.completionStatus.New);
+                        task.setStatus(TasksDB.completionStatus.New);
                         viewHolder.name.setPaintFlags(viewHolder.name.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                     }
                 }
@@ -68,7 +68,7 @@ public class TasksAdapter extends ArrayAdapter<TasksDB> {
 
         viewHolder.name.setText(task.getName());
 
-        SimpleDateFormat df = new SimpleDateFormat("ccc MMM d hh:mm:ss a", Locale.US);
+        SimpleDateFormat df = new SimpleDateFormat("ccc MMM d hh:mm a", Locale.US);
         viewHolder.date.setText(df.format(task.getEndDate()));
 
         viewHolder.description.setText(task.getDescription());
