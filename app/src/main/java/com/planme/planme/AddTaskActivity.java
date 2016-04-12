@@ -95,7 +95,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         textName.setText(_task.getName());
         textDescription.setText(_task.getDescription());
-        textLocation.setText(_task.getDescription());
+        textLocation.setText(_task.getLocation().getProvider());
         startDateText._editText.setText(sdf.format(_task.getStartDate()));
         startTimeText._editText.setText(stf.format(_task.getStartDate()));
         endDateText._editText.setText(sdf.format(_task.getEndDate()));
