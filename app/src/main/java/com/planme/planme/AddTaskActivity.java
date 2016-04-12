@@ -113,7 +113,11 @@ public class AddTaskActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_save:
-                addToDB();
+                if (_task == null) {
+                    addToDB();
+                } else {
+                    // TODO Update Task
+                }
                 intent.putExtra("Save", true);
                 setResult(RESULT_OK, intent);
                 finish();

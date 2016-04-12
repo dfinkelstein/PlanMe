@@ -24,6 +24,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private TasksAdapter tasksAdapter;
     private MyDBHandler dbHandler;
+    Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,11 @@ public class HomeScreenActivity extends AppCompatActivity {
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 2);
         calendarView.setMaxDate(calendar.getTimeInMillis());
 
+        cal = Calendar.getInstance();
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(year, month, dayOfMonth);
                 updateTasks(cal.getTime());
             }
@@ -106,11 +108,11 @@ public class HomeScreenActivity extends AppCompatActivity {
                 if (data.getBooleanExtra("Save", false)) {
                     Snackbar.make(findViewById(R.id.fab), "Task Saved!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    updateTasks(new Date());
+                    updateTasks(cal.getTime());
                 } else {
                     Snackbar.make(findViewById(R.id.fab), "Task Deleted!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    updateTasks(new Date());
+                    updateTasks(cal.getTime());
                 }
             }
         }
