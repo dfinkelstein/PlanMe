@@ -7,7 +7,8 @@
     android:padding="10dp"
     android:layout_marginTop="?attr/actionBarSize"
     tools:context=".AddTaskActivity"
-    tools:showIn="@layout/activity_add_task">
+    tools:showIn="@layout/activity_add_task"
+    android:weightSum="1">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_name"
@@ -136,16 +137,26 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Time Spent"
+        android:id="@+id/timeSpent"
+        android:layout_weight="0.17"
+        android:paddingLeft="5dp"
+        android:paddingTop="20dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"/>
+
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/autoSilentSwitchLabel"
         android:id="@+id/autoSilentSwitch"
-        android:layout_gravity="end"
         android:checked="false"
         android:paddingLeft="5dp"
         android:paddingTop="20dp"
         android:paddingRight="5dp"
-        android:paddingBottom="5dp" />
+        android:paddingBottom="5dp"/>
 
 </LinearLayout>
